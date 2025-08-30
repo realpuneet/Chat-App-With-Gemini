@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import axiosInstance from "../config/axios";
+import { useUser } from "../context/user.context";
 
 export default function Login() {
   const {
@@ -10,12 +11,15 @@ export default function Login() {
   } = useForm();
 
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const onSubmit = (data) => {
     axiosInstance
       .post("/api/user/login", data)
       .then((response) => {
         console.log("Login Successful:", response.data);
+        localStorage.setItem("token", response.data.token);
+        setUser(response.data.user);
         navigate("/");
       })
       .catch((error) => {

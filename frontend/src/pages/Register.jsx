@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import axiosInstance from "../config/axios";
+import { useUser } from "../context/user.context";
 
 export default function Register() {
   const {

@@ -1,22 +1,8 @@
 import React from "react";
-import axiosInstance from "../config/axios";
-import { useNavigate } from "react-router";
+import { useUser } from "../context/user.context";
 
 export default function Home() {
-
-    const navigate = useNavigate();
-
-    const logoutHandler = () => {
-        axiosInstance.post("/api/user/logout")
-            .then((response) => {
-                console.log("Logout Successful:", response.data);
-                // Handle successful logout (e.g., redirect to login page)
-                navigate("/login");
-            })
-            .catch((error) => {
-                console.error("Logout Error:", error);
-            });
-    };
+    const { user } = useUser();
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
@@ -27,7 +13,7 @@ export default function Home() {
           <div className="space-y-4">
             <div className="bg-white/20 p-4 rounded-xl shadow-md">
               <p className="text-sm text-gray-300">Logged in as</p>
-              <p className="font-semibold">Puneet Ji</p>
+              <p className="font-semibold">{user?.email}</p>
             </div>
             <nav className="space-y-2">
               <button className="w-full text-left px-4 py-2 rounded-xl hover:bg-purple-500/40 transition">
@@ -43,7 +29,7 @@ export default function Home() {
           </div>
         </div>
 
-        <button onClick={logoutHandler} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg transition">
+        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg transition">
           Logout
         </button>
       </aside>
