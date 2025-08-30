@@ -13,6 +13,9 @@ export const createUserController = async (req, res) => {
   try {
     const user = await createUser(req.body);
     const token = await user.generateJWT();
+
+    delete user._doc.password;  
+
     res.status(201).json({ user: user, token: token });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -43,8 +46,10 @@ export const loginController = async (req, res) => {
     }
 
     const token = await user.generateJWT();
+    
+    delete user._doc.password;  
 
-    res.status(200).json({ message: "Logged in", user, token });
+    res.status(200).json({ message: "Logged in successfully", user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -54,7 +59,7 @@ export const profileController = async (req, res) => {
   console.log(req.user);
 
   res.status(200).json({
-    user: req.user,
+    user: req.user
   });
 };
 
