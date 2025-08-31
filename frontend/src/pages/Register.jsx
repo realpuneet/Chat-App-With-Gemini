@@ -11,12 +11,15 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     axiosInstance.post('/api/user/register', data)
       .then(response => {
         console.log("Registration Successful:", response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        setUser(response.data);
         navigate('/Login');
       })
       .catch(error => {
