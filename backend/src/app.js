@@ -21,6 +21,6 @@ app.use(
 );
 
 app.use("/api/user", userRoute);
-app.use("/projects", projectRoute);
+app.use("/api/projects", projectRoute);
 
 export default app;
